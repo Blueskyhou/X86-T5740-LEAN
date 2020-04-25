@@ -47,7 +47,7 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           
-          # 编译x86 T5740固件:
+          # 编译x86 T5740固件了:
           cat >> .config <<EOF
           CONFIG_TARGET_x86=y
           CONFIG_TARGET_x86_generic=y
