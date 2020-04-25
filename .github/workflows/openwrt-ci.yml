@@ -7,14 +7,12 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 # 
 
-name: OpenWrt-CI
 
+name: OpenWrt-CI
 on:
-  schedule:
-    - cron: 0 20 * * *
   push:
-    tags:
-      - '*'
+    branches: 
+      - master
 
 jobs:
 
@@ -48,6 +46,13 @@ jobs:
           sed -i 's/\"#src-git\"/\"src-git\"/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          
+          # 编译x86 T5740固件:
+          cat >> .config <<EOF
+          CONFIG_TARGET_x86=y
+          CONFIG_TARGET_x86_generic=y
+          CONFIG_TARGET_x86_generic_Generic=y
+          EOF
 
       - name: Generate configuration file
         run: make defconfig
